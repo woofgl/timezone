@@ -1,0 +1,13 @@
+{
+  "name": "TimeZone",
+  "description": "Time Zone with Brite",
+  "version": "1.0",
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
+  },
+  "permissions": [
+    "unlimitedStorage"
+  ]
+}

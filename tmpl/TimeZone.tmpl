@@ -1,6 +1,13 @@
 <script id="tmpl-TimeZone" type="text/html">
     <div>
-        just a test
+        {{for timeZone}}
+        <div class="timeZone">
+            <div>{{:Dcity}}, {{:Dcounty}}</div>
+            <div>{{:Dhour}}:{{:Dminute}}:{{:Dsecond}}</div>
+            <div>{{:Dweek}}, {{:Dmonth}}/{{:Dday}}/{{:Dyear}}</div>
+        </div>
+        </br>
+        {{/for}}
     </div>
 
 </script>

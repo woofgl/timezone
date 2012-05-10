@@ -19,10 +19,9 @@
     </script>
 
     <script type="text/javascript" src="js/jsrender.js" ></script>
-    
-    
     <script type="text/javascript" src="js/timezone-data.js" ></script>
-    
+    <script type="text/javascript" src="js/timezone-dao.js" ></script>
+
     <!-- Display the main Demo screen (which will display the sub components) -->
     <script type="text/javascript">
     $(function(){
@@ -32,9 +31,15 @@
     
 
   </head>
-  
+
   <body>
-    
+  <div class="TimeZone">
+      <h2>Time Zone</h2>
+      <a id="addNewCity" class="btn">Add New City</a>
+
+      <div id="page"></div>
+      <div id="selectTimeZone"></div>
+  </div>
   </body>
   
 </html>
