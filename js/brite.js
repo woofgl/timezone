@@ -1502,9 +1502,9 @@ brite.ua = {};
 	// ------ /Gradient ------ //
 
 	function setupPrototype() {
-		var methods = [ 'beginPath', 'clip', 'closePath', 'drawImage', 'fill', 'fillText', 
+		var methods = [ 'beginPath', 'clip', 'closePath', 'drawImage', 'fill', 'fillText',
 		                 'arc','arcTo', 'lineTo', 'moveTo', 'bezierCurveTo', 'quadraticCurveTo', 'rect',
-		                 'clearRect','fillRect','strokeRect','translate', 'rotate', 'save', 
+		                 'clearRect','fillRect','strokeRect','translate', 'rotate', 'save', 'restore',
 		                 'scale', 'setTransform', 'stroke', 'strokeText', 'transform' ];
 
 		var getterMethods = [ 'createPattern', 'drawFocusRing', 'isPointInPath', 'measureText', 

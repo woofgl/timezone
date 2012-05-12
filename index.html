@@ -1,45 +1,120 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+
     <title>Time Zone</title>
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css"/>
 
-    <script type="text/javascript" src="js/jquery.js" ></script>
-    <script type="text/javascript" src="js/brite.js" ></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/brite.js"></script>
 
 
     <!-- Set the default component config to load template -->
     <script type="text/javascript">
-    brite.defaultComponentConfig.loadTmpl = true;
-    brite.defaultComponentConfig.loadCss = true;
+        brite.defaultComponentConfig.loadTmpl = true;
+        brite.defaultComponentConfig.loadCss = true;
     </script>
 
-    <script type="text/javascript" src="js/jsrender.js" ></script>
-    <script type="text/javascript" src="js/timezone-data.js" ></script>
-    <script type="text/javascript" src="js/timezone-dao.js" ></script>
+    <script type="text/javascript" src="js/jsrender.js"></script>
+    <script type="text/javascript" src="js/timezone-data.js"></script>
+    <script type="text/javascript" src="js/timezone-dao.js"></script>
 
     <!-- Display the main Demo screen (which will display the sub components) -->
     <script type="text/javascript">
-    $(function(){
-      brite.display("TimeZone");
-    });
+        $(function () {
+            //add city click
+            $("body").delegate("#addNewCity", "click", function () {
+                brite.display("SelectTimeZone")
+            });
+
+            var showTimeZone = function () {
+                $("#page").html("");
+                brite.dao.list("TimeZone").done(function (timeZone) {
+
+                    var selectedTimeZone = [];
+                    var wd = tmz.wd;
+
+                    var date = new Date();
+                    var Dyear = date.getFullYear();
+                    var Dday = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                    var Dmonth = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+                    var Dhour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+                    var Dminute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+                    var Dsecond = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+                    var Dweek = wd[date.getDay()];
+                    var localTime = {
+                        'Dcity':'Local Time',
+                        'Dcounty':'',
+                        'Dyear':Dyear,
+                        'Dday':Dday,
+                        'Dmonth':Dmonth,
+                        'Dhour':Dhour,
+                        'Dminute':Dminute,
+                        'Dsecond':Dsecond,
+                        'Dweek':Dweek
+                    };
+                    selectedTimeZone.push(localTime);
+
+                    for (var i = 0; i < timeZone.length; i++) {
+                        var t = new Date();
+                        t.setTime(t.getTime() + (t.getTimezoneOffset() * 60000) + ((timeZone[i].stz + timeZone[i].dst) * 60000));
+
+                        var Dcity = timeZone[i].city;
+                        var Dcounty = timeZone[i].country;
+
+                        //the zone's time
+                        Dyear = t.getFullYear();
+                        Dday = t.getDate() < 10 ? '0' + t.getDate() : t.getDate();
+                        Dmonth = t.getMonth() < 10 ? '0' + (t.getMonth() + 1) : t.getMonth() + 1;
+                        Dhour = t.getHours() < 10 ? '0' + t.getHours() : t.getHours();
+                        Dminute = t.getMinutes() < 10 ? '0' + t.getMinutes() : t.getMinutes();
+                        Dsecond = t.getSeconds() < 10 ? '0' + t.getSeconds() : t.getSeconds();
+                        Dweek = wd[t.getDay()];
+
+
+                        var tz = {
+                            'Dcity':Dcity,
+                            'Dcounty':Dcounty,
+                            'Dyear':Dyear,
+                            'Dday':Dday,
+                            'Dmonth':Dmonth,
+                            'Dhour':Dhour,
+                            'Dminute':Dminute,
+                            'Dsecond':Dsecond,
+                            'Dweek':Dweek
+                        };
+
+                        selectedTimeZone.push(tz);
+                    }
+
+                    for (i = 0; i < selectedTimeZone.length; i++) {
+                        $("#page").append("<div class='time'></div>");
+                        brite.display("TimeZone", selectedTimeZone[i],{parent:$("#page div:last")})
+                    }
+
+                    setTimeout(showTimeZone, 1000);
+                });
+            };
+            showTimeZone();
+
+        });
     </script>
-    
 
-  </head>
 
-  <body>
-  <div class="TimeZone">
-      <h2>Time Zone</h2>
-      <a id="addNewCity" class="btn">Add New City</a>
+</head>
 
-      <div id="page"></div>
-      <div id="selectTimeZone"></div>
-  </div>
-  </body>
-  
+<body>
+<div class="TimeZone">
+    <h2>Time Zone</h2>
+    <a id="addNewCity" class="btn">Add New City</a>
+
+    <div id="page"></div>
+    <div id="selectTimeZone"></div>
+</div>
+</body>
+
 </html>

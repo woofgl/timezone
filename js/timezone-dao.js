@@ -15,7 +15,6 @@
     // ------ DAO Generic CRUD Interface ------ //
     TimeZoneDao.prototype.get = function (objectType, id) {
         var idx = brite.array.getIndex(_timeZone, "city", id);
-        console.log(_timeZone[idx]);
         return _timeZone[idx];
     };
 
