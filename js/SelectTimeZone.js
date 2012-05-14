@@ -36,7 +36,6 @@
             var city = $this.attr("data-obj_city");
             addCityTimeZone(city);
             component.close();
-            brite.display("TimeZone");
         });
 
         /*-- Helper Functions --*/

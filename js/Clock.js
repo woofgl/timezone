@@ -5,24 +5,21 @@
 
     }
 
-    ;
-
     Clock.prototype.create = function (data) {
+        this.data = data;
         var html = $("#tmpl-Clock").render({});
         return $(html);
     };
 
-    Clock.prototype.postDisplay = function (data) {
+    Clock.prototype.postDisplay = function () {
         var c = this;
-        drawClock.call(c, data);
+        drawClock.call(c, c.data);
     };
     // --------- /Component Interface Implementation ---------- //
 
     // --------- Component private method ---------- //
     function drawClock(data) {
-//         var $clockCanvas = this.$element.find("canvas");
         var c2d = brite.gtx(this.$element.find("canvas"));
-
 
         if (c2d) {
             var width = 150;
@@ -68,16 +65,19 @@
                 }
                 c2d.beginPath().moveTo(sx, sy).lineTo(ex, ey).stroke();
             }
-            //Fetch the current time
+            //Fetch the data time
             var ampm = "AM";
-            var now = new Date();
-            var hrs = data.Dhour;
-            var min = data.Dminute
-            var sec = data.Dsecond;
+
+            var hrs = parseInt(data.Dhour);
+            var min = parseInt(data.Dminute);
+            var sec = parseInt(data.Dsecond);
 
             c2d.strokeStyle("#000");
             //Draw AM/PM indicator
-            if (hrs >= 12) ampm = "PM";
+            if (hrs >= 12) {
+                ampm = "PM";
+            }
+
             c2d.lineWidth(1);
             c2d.strokeRect(width*0.07, -width*0.047, width*0.137, width * 0.09).fillText(ampm, width*0.13, 0);
 

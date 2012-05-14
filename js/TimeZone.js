@@ -6,15 +6,22 @@
     }
 
     TimeZone.prototype.create = function (data, config) {
+        this.data = data;
         var html = $("#tmpl-TimeZone").render(data);
-//        console.log(data);
         return $(html);
     };
 
-    TimeZone.prototype.postDisplay = function (data) {
+    TimeZone.prototype.postDisplay = function () {
         var c = this;
         var $e = c.$element;
-        brite.display("Clock",data, {parent: $e.find(".clockTime")})
+        brite.display("Clock",c.data, {parent: $e.find(".clockTime")})
+
+        $e.delegate("a.delete","click", function(){
+            console.log(c.data);
+               brite.dao.remove("TimeZone", c.data.Dcity);
+               $e.html("");
+               $e.remove();
+        });
 
     };
     // --------- /Component Interface Implementation ---------- //
